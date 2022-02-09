@@ -8,11 +8,12 @@ const refs = {
   createPromiseBtn: document.querySelector('button[type = "submit"]'),
 }
 
-// console.log(refs.inputDeley);
-// console.log(refs.inputStep);
-// console.log(refs.inputAmount);
-// console.log(refs.createPromiseBtn);
+console.log(refs.inputAmount);
 
+
+let promises = []; 
+
+refs.form.addEventListener("submit", onSubmitBtnClick);
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
@@ -28,53 +29,42 @@ function createPromise(position, delay) {
         reject({ position , delay})
       }
     }, delay);    
-  });
-
-      
+  });     
 };
 
 
-
-refs.form.addEventListener("submit", onSubmitBtnClick);
-
 function onSubmitBtnClick(event) {
   event.preventDefault();
-  let promisePosition = 0;
-  let delay = refs.inputDeley.value;
-  // console.log(delay);
-  let delayStep = 0;
-  // console.log(delayStep);
-  const promisesAmount = refs.inputAmount.value;
-  multiplePromise();
+  const firstDelay = Number(refs.inputDeley.value);
+  const delayStep = Number(refs.inputStep.value);  
+  const promisesAmount = Number(refs.inputAmount.value);
 
-  function multiplePromise() {
-    delay = Number(delay) + Number(delayStep);
-    console.log(delay);
-    delayStep = refs.inputStep.value;
-    console.log(delay);
-    const date = Date.now();
-    setTimeout(() => {
-      const currentTime = Date.now();
-      console.log("Deley", currentTime - date);
-      if (promisesAmount > promisePosition) {
-        promisePosition += 1;
-        // console.log(promisePosition);
-        // console.log(delay);
-        createPromise(promisePosition, delay)
-          .then(({ position, delay }) => {
-            console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-          })
-          .catch(({ position, delay }) => {
-            console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-          });       
-        
-        multiplePromise();
-        return;
-      }
-      console.log("Error")
-    }, delay);
-
-  };
-
+  if (login.value === "" || password.value === "") {
+    return console.log("Please fill in all the fields!");
+  }
   
-}
+  createArrayOfPromises(promisesAmount, firstDelay, delayStep).forEach(promise => {
+    promise.
+      then(({ position, delay }) => {
+        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      }).catch(({ position, delay }) => {
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      })
+  });
+
+  event.currentTarget.reset();
+
+};
+
+
+function createArrayOfPromises(promisesAmount, firstDelay, delayStep) {
+  
+  for (let i = 0; i <= promisesAmount - 1 ; i += 1) {
+    
+    const delay = firstDelay + delayStep * i;
+    const promisePosition = i + 1;
+    promises.push(createPromise(promisePosition, delay));    
+    // console.log(promises);      
+  };
+  return promises;
+};
