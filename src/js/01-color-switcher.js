@@ -16,11 +16,11 @@ refs.stopBtnRef.addEventListener("click", onStopBtnClick);
 function onStartBtnClick() {
     intervalId = setInterval(() => {
         const randomColor = getRandomHexColor();
-        console.log(randomColor);
+        // console.log(randomColor);
         refs.bodyRef.style.backgroundColor = `${randomColor}`;      
         
     }, 1000);
-    console.log(intervalId);
+    // console.log(intervalId);
 
     refs.startBtnRef.disabled = "true";
     refs.stopBtnRef.disabled = false;
@@ -29,7 +29,7 @@ function onStartBtnClick() {
 
 function onStopBtnClick() {
 
-    console.log(intervalId);      
+    // console.log(intervalId);      
     clearInterval(intervalId);
     refs.stopBtnRef.disabled = "true";
     refs.startBtnRef.disabled = false;

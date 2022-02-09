@@ -46,7 +46,7 @@ const timer = {
             const currentTime = Date.now();
             // console.log(currentTime);
             const deltaTime = selectedDate - currentTime;
-            console.log(deltaTime);
+            // console.log(deltaTime);
             if (deltaTime >= 0) {
                 const { days, hours, minutes, seconds } = convertMs(deltaTime);
                 console.log(`${days}:${hours}:${minutes}:${seconds}`);
@@ -57,7 +57,7 @@ const timer = {
         }, 1000);
 
         const timeToIntervalStop = selectedDate.getTime() - Date.now();
-        console.log(timeToIntervalStop);
+        // console.log(timeToIntervalStop);
 
         setTimeout(() => {
             clearInterval(this.intervalId)

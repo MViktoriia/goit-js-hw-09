@@ -8,7 +8,7 @@ const refs = {
   createPromiseBtn: document.querySelector('button[type = "submit"]'),
 }
 
-console.log(refs.inputAmount);
+// console.log(refs.inputAmount);
 
 
 let promises = []; 
@@ -39,10 +39,7 @@ function onSubmitBtnClick(event) {
   const delayStep = Number(refs.inputStep.value);  
   const promisesAmount = Number(refs.inputAmount.value);
 
-  if (login.value === "" || password.value === "") {
-    return console.log("Please fill in all the fields!");
-  }
-  
+   
   createArrayOfPromises(promisesAmount, firstDelay, delayStep).forEach(promise => {
     promise.
       then(({ position, delay }) => {
@@ -53,6 +50,7 @@ function onSubmitBtnClick(event) {
   });
 
   event.currentTarget.reset();
+  promises = [];
 
 };
 
@@ -64,7 +62,7 @@ function createArrayOfPromises(promisesAmount, firstDelay, delayStep) {
     const delay = firstDelay + delayStep * i;
     const promisePosition = i + 1;
     promises.push(createPromise(promisePosition, delay));    
-    // console.log(promises);      
+    console.log(promises);      
   };
   return promises;
 };
